@@ -42,9 +42,10 @@ const checkAmount = (customerChange, amountToCheck, currencyIndex) => {
     // TODO: corrigir lógica do cid[currencyIndex][1] >= amountToCheck
     // amount não precisa ser menor, basta eu conseguir tirar a parte do cid dele
     while(customerChange >= amountToCheck && cid[currencyIndex][1] >= amountToCheck) {
+        customerChange = parseFloat(customerChange.toFixed(2));
         customerChange -= amountToCheck;
         cid[currencyIndex][1] -= amountToCheck;
-        currencyIndex[currencyIndex][1] += amountToCheck;
+        currencyUnitAmount[currencyIndex][1] += amountToCheck;
     }
     return customerChange;
 }
@@ -60,9 +61,11 @@ const updateChangeDue = (status) => {
 }
 
 purchaseBtn.addEventListener('click', () => {
-    const customerCash = cash.value;
+    const customerCash = Number(cash.value);
+    console.log(`Clicou no botão, dinheiro: R$ ${customerCash}`);
 
     if(!customerCash){
+        console.log('Nenhum valor adicionado.')
         return;
     }
 
@@ -73,14 +76,23 @@ purchaseBtn.addEventListener('click', () => {
     } else {
         // TODO: tem um jeito melhor de fazer essas chamadas?
         let customerChange = checkAmount(customerCash - price, 100, 8);
+        console.log(`Chamou check de R$ 100. Valor restante: ${customerChange}`);
         customerChange = checkAmount(customerChange, 20, 7);
+        console.log(`Chamou check de R$ 20. Valor restante: ${customerChange}`);
         customerChange = checkAmount(customerChange, 10, 6);
+        console.log(`Chamou check de R$ 10. Valor restante: ${customerChange}`);
         customerChange = checkAmount(customerChange, 5, 5);
+        console.log(`Chamou check de R$ 5. Valor restante: ${customerChange}`);
         customerChange = checkAmount(customerChange, 1, 4);
+        console.log(`Chamou check de R$ 1. Valor restante: ${customerChange}`);
         customerChange = checkAmount(customerChange, 0.25, 3);
+        console.log(`Chamou check de R$ 0.25. Valor restante: ${customerChange}`);
         customerChange = checkAmount(customerChange, 0.1, 2);
+        console.log(`Chamou check de R$ 0.1. Valor restante: ${customerChange}`);
         customerChange = checkAmount(customerChange, 0.05, 1);
+        console.log(`Chamou check de R$ 0.05. Valor restante: ${customerChange}`);
         customerChange = checkAmount(customerChange, 0.01, 0);
+        console.log(`Chamou check de R$ 0.01. Valor restante: ${customerChange}`);
         
         if(customerChange === 0) {
             isCashInDrawerEqualToChange = true;

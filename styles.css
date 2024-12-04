@@ -30,12 +30,12 @@ h1 {
     font-size: 2.5rem;
 }
 
-.main {
-    width: 90%;
+main {
+    display: flex;
+    flex-direction: column;
 }
 
 .change-due {
-    display: flex;
     font-size: 1.2rem;
     margin: 10px auto;
 }
