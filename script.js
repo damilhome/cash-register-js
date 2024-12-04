@@ -44,9 +44,19 @@ const checkAmount = (customerChange, amountToCheck, currencyIndex) => {
     while(customerChange >= amountToCheck && cid[currencyIndex][1] >= amountToCheck) {
         customerChange -= amountToCheck;
         cid[currencyIndex][1] -= amountToCheck;
-        currencyIndex[currencyIndex][1] += 1;
+        currencyIndex[currencyIndex][1] += amountToCheck;
     }
     return customerChange;
+}
+
+const updateChangeDue = (status) => {
+    changeDue.innerHTML += `<p>Status: ${status}</p>`
+
+    for(let i = currencyUnitAmount.length - 1; i >= 0; i--) {
+        if(currencyUnitAmount[i][1] > 0) {
+            changeDue.innerHTML += `<p>${currencyUnitAmount[i][0]}: $${currencyUnitAmount[i][1]}</p>`
+        }
+    }
 }
 
 purchaseBtn.addEventListener('click', () => {
@@ -82,8 +92,10 @@ purchaseBtn.addEventListener('click', () => {
 
             if(isCashInDrawerEqualToChange) {
                 // TODO: implementar código para inserir o troco do cliente na tela com STATUS: CLOSED
+                updateChangeDue('CLOSED');
             } else {
                 // TODO: implementar código para inserir o troco do cliente na tela com STATUS: OPEN
+                updateChangeDue('OPEN');
             }
             
         } else {
