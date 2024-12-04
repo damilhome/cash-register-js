@@ -1,0 +1,157 @@
+*,
+*::before,
+*::after {
+    padding: 0;
+    margin: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --bg-color: #0A0A23;
+    --light-text-color: #DFDFE2;
+    --dark-text-color: #0A0A23;
+    --btn-gradient: linear-gradient(#FECA4A, #FFAE35);
+    --border-color: #99C9FF;
+}
+
+
+body {
+    background-color: var(--bg-color);
+    color: var(--light-text-color);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+h1 {
+    margin-top: 45px;
+    margin-bottom: 25px;
+    font-size: 2.5rem;
+}
+
+.main {
+    width: 90%;
+}
+
+.feedback-customer {
+    display: flex;
+    font-size: 1.2rem;
+}
+
+.customer-change {
+    list-style: none;
+    margin: 10px auto;
+}
+
+.customer-input-form {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 10px;
+    font-size: 1.2rem;
+}
+
+.customer-input-form input {
+    padding: 7px 5px;
+    width: 80%;
+}
+
+.purchase-btn {
+    color: var(--dark-text-color);
+    background: var(--btn-gradient);
+    padding: 7px 25px;
+    width: 40%;
+    font-size: 1rem;
+    text-align: center;
+    margin: 10px 0;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.drawer-purchase-price {
+    margin-top: 20px;
+    text-align: center;
+}
+
+.drawer-purchase-price p{
+    display: inline-block;
+    background-color: #000;
+    width: 50%;
+    text-align: center;
+    padding: 5px;
+    font-size: 1.2rem;
+    border: 10px solid var(--border-color);
+    color: white;
+}
+
+.drawer-purchase-price div {
+    display: inline-block;
+    width: 80px;
+}
+
+.drawer-conector {
+    width: 60%;
+    height: 30px;
+    border-left: 40px solid var(--border-color);
+    margin: auto;
+}
+
+.drawer {
+    width: 90%;
+    height: auto;
+    background-color: var(--border-color);
+    color: var(--dark-text-color);
+    padding: 20px;
+    border-radius: 40px 40px 0 0;
+    display: flex;
+    justify-content: space-between;
+}
+
+.drawer-buttons {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 5px;
+    width: 70px;
+    height: 70px;
+}
+
+.drawer-buttons span {
+    width: 20px;
+    height: 20px;
+    background-color: #000;
+    border-radius: 2px;
+}
+
+.drawer-change {
+    background-color: white;
+    width: 60%;
+    padding: 10px;
+}
+
+.drawer-change p {
+    font-size: 1.2rem;
+    font-weight: bold;
+}
+
+.drawer-change ul {
+    list-style: none;
+    font-size: 1.2rem;
+}
+
+.locker {
+    margin-top: 10px;
+    width: 90%;
+    height: 50px;
+    background-color: #99C9FF;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.locker span{
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    background-color: #000;
+}
