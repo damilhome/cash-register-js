@@ -34,13 +34,9 @@ h1 {
     width: 90%;
 }
 
-.feedback-customer {
+.change-due {
     display: flex;
     font-size: 1.2rem;
-}
-
-.customer-change {
-    list-style: none;
     margin: 10px auto;
 }
 

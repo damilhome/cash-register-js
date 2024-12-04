@@ -9,14 +9,7 @@
 <body>
     <main>
         <h1>Cash Register Project</h1>
-        <div id="feedback-customer" class="feedback-customer">
-            <ul id="customer-change" class="customer-change">
-                <li>Status: OPEN</li>
-                <li>ONE: $16</li>
-                <li>DIME: $0.4</li>
-                <li>NICKEL: $0.3</li>
-                <li>PENNY: $0.04</li>
-            </ul>
+        <div id="change-due" class="change-due">
         </div>
         <form id="customer-input-form" class="customer-input-form">
             <label for="customer-input">Enter cash from customer:</label>
@@ -24,8 +17,8 @@
             <button type="button" id="purchase-btn" class="purchase-btn">Purchase</button>
         </form>
         <div id="drawer-container" class="drawer-container">
-            <div id="drawer-purchase-price" class="drawer-purchase-price">
-                <p>Total: $3.26</p>
+            <div class="drawer-purchase-price">
+                <p>Total: $<span id="drawer-purchase-price"></span></p>
                 <div></div>
             </div>
             <div class="drawer-conector"></div>
@@ -44,15 +37,15 @@
                 <div class="drawer-change">
                     <p>Change in drawer:</p>
                     <ul>
-                        <li>Pennies: $0.57</li>
-                        <li>Nickels: $1.7</li>
-                        <li>Dimes: $0</li>
-                        <li>Quarters: $0</li>
-                        <li>Ones: $2</li>
-                        <li>Fives: $0</li>
-                        <li>Tens: $0</li>
-                        <li>Twenties: $0</li>
-                        <li>Hundreds: $0</li>
+                        <li>Pennies: $<span></span></li>
+                        <li>Nickels: $<span></span></li>
+                        <li>Dimes: $<span></span></li>
+                        <li>Quarters: $<span></span></li>
+                        <li>Ones: $<span></span></li>
+                        <li>Fives: $<span></span></li>
+                        <li>Tens: $<span></span></li>
+                        <li>Twenties: $<span></span></li>
+                        <li>Hundreds: $<span></span></li>
                     </ul>
                 </div>
             </div>
@@ -61,5 +54,7 @@
             </div>
         </div>
     </main>
+
+    <script src="script.js"></script>
 </body>
 </html>
