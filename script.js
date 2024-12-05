@@ -1,5 +1,5 @@
 const changeDue = document.getElementById('change-due');
-const cash = document.getElementById('customer-input');
+const cash = document.getElementById('cash');
 const purchaseBtn = document.getElementById('purchase-btn');
 const purchasePrice = document.getElementById('drawer-purchase-price');
 const changeInDrawer = document.querySelectorAll('.drawer-change span');
@@ -15,7 +15,7 @@ const currencyUnitAmount = [
     ['ONE HUNDRED', 0]
 ]
 
-let price = 1.87;
+let price = 20;
 let cid = [
   ['PENNY', 1.01],
   ['NICKEL', 2.05],
@@ -39,9 +39,7 @@ const loadDrawerChanges = () => {
 }
 
 const checkAmount = (customerChange, amountToCheck, currencyIndex) => {
-    // TODO: corrigir lógica do cid[currencyIndex][1] >= amountToCheck
-    // amount não precisa ser menor, basta eu conseguir tirar a parte do cid dele
-    while(customerChange >= amountToCheck && cid[currencyIndex][1] >= amountToCheck) {
+    while(customerChange >= amountToCheck && cid[currencyIndex][1] > 0) {
         customerChange = parseFloat(customerChange.toFixed(2));
         customerChange -= amountToCheck;
         cid[currencyIndex][1] -= amountToCheck;
@@ -75,7 +73,7 @@ purchaseBtn.addEventListener('click', () => {
         changeDue.innerHTML = `<p>No change due - customer paid with exact cash</p>`
     } else {
         // TODO: tem um jeito melhor de fazer essas chamadas?
-        let customerChange = checkAmount(customerCash - price, 100, 8);
+        let customerChange = checkAmount(parseFloat((customerCash - price).toFixed(2)), 100, 8);
         console.log(`Chamou check de R$ 100. Valor restante: ${customerChange}`);
         customerChange = checkAmount(customerChange, 20, 7);
         console.log(`Chamou check de R$ 20. Valor restante: ${customerChange}`);
