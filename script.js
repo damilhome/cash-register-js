@@ -3,7 +3,7 @@ const cash = document.getElementById('cash');
 const purchaseBtn = document.getElementById('purchase-btn');
 const purchasePrice = document.getElementById('drawer-purchase-price');
 const changeInDrawer = document.querySelectorAll('.drawer-change span');
-const currencyUnitAmount = [
+const currencyChange = [
     ['PENNY', 0],
     ['NICKEL', 0],
     ['DIME', 0],
@@ -15,7 +15,7 @@ const currencyUnitAmount = [
     ['ONE HUNDRED', 0]
 ]
 
-let price = 20;
+let price = 3.26;
 let cid = [
   ['PENNY', 1.01],
   ['NICKEL', 2.05],
@@ -40,30 +40,32 @@ const loadDrawerChanges = () => {
 
 const checkAmount = (customerChange, amountToCheck, currencyIndex) => {
     while(customerChange >= amountToCheck && cid[currencyIndex][1] > 0) {
-        customerChange = parseFloat(customerChange.toFixed(2));
-        customerChange -= amountToCheck;
-        cid[currencyIndex][1] -= amountToCheck;
-        currencyUnitAmount[currencyIndex][1] += amountToCheck;
+        customerChange = parseFloat((customerChange - amountToCheck).toFixed(2));
+        cid[currencyIndex][1] = parseFloat((cid[currencyIndex][1] - amountToCheck).toFixed(2));
+        currencyChange[currencyIndex][1] = parseFloat((currencyChange[currencyIndex][1] + amountToCheck).toFixed(2));
     }
     return customerChange;
 }
 
 const updateChangeDue = (status) => {
-    changeDue.innerHTML += `<p>Status: ${status}</p>`
+    changeDue.innerHTML = `<p>Status: ${status}</p>`
 
-    for(let i = currencyUnitAmount.length - 1; i >= 0; i--) {
-        if(currencyUnitAmount[i][1] > 0) {
-            changeDue.innerHTML += `<p>${currencyUnitAmount[i][0]}: $${currencyUnitAmount[i][1]}</p>`
+    for(let i = currencyChange.length - 1; i >= 0; i--) {
+        if(currencyChange[i][1] > 0) {
+            changeDue.innerHTML += `<p> ${currencyChange[i][0]}: $${currencyChange[i][1]}</p>`
         }
     }
 }
 
+const resetChange = () => {
+    currencyChange.forEach(currency => currency[1] = 0);
+};
+
 purchaseBtn.addEventListener('click', () => {
     const customerCash = Number(cash.value);
-    console.log(`Clicou no botão, dinheiro: R$ ${customerCash}`);
+    cash.value = '';
 
     if(!customerCash){
-        console.log('Nenhum valor adicionado.')
         return;
     }
 
@@ -72,45 +74,29 @@ purchaseBtn.addEventListener('click', () => {
     } else if(customerCash === price) {
         changeDue.innerHTML = `<p>No change due - customer paid with exact cash</p>`
     } else {
-        // TODO: tem um jeito melhor de fazer essas chamadas?
-        let customerChange = checkAmount(parseFloat((customerCash - price).toFixed(2)), 100, 8);
-        console.log(`Chamou check de R$ 100. Valor restante: ${customerChange}`);
-        customerChange = checkAmount(customerChange, 20, 7);
-        console.log(`Chamou check de R$ 20. Valor restante: ${customerChange}`);
-        customerChange = checkAmount(customerChange, 10, 6);
-        console.log(`Chamou check de R$ 10. Valor restante: ${customerChange}`);
-        customerChange = checkAmount(customerChange, 5, 5);
-        console.log(`Chamou check de R$ 5. Valor restante: ${customerChange}`);
-        customerChange = checkAmount(customerChange, 1, 4);
-        console.log(`Chamou check de R$ 1. Valor restante: ${customerChange}`);
-        customerChange = checkAmount(customerChange, 0.25, 3);
-        console.log(`Chamou check de R$ 0.25. Valor restante: ${customerChange}`);
-        customerChange = checkAmount(customerChange, 0.1, 2);
-        console.log(`Chamou check de R$ 0.1. Valor restante: ${customerChange}`);
-        customerChange = checkAmount(customerChange, 0.05, 1);
-        console.log(`Chamou check de R$ 0.05. Valor restante: ${customerChange}`);
-        customerChange = checkAmount(customerChange, 0.01, 0);
-        console.log(`Chamou check de R$ 0.01. Valor restante: ${customerChange}`);
-        
+        let customerChange = parseFloat((customerCash - price).toFixed(2));
+        const currencyValues = [0.01, 0.05, 0.1, 0.25, 1, 5, 10, 20, 100];
+        for(let i = currencyValues.length - 1; i >= 0; i--) {
+            customerChange = checkAmount(customerChange, currencyValues[i], i)
+        }
+
+        console.log(typeof customerChange)
         if(customerChange === 0) {
-            isCashInDrawerEqualToChange = true;
-            cid.forEach(currency => {
-                if(currency[1] > 0) {
-                    isCashInDrawerEqualToChange = false
-                }
-            })
+            let isCashInDrawerEqualToChange = true;
+            cid.forEach(currency => isCashInDrawerEqualToChange = currency[1] > 0 ? false : true)
 
             if(isCashInDrawerEqualToChange) {
-                // TODO: implementar código para inserir o troco do cliente na tela com STATUS: CLOSED
                 updateChangeDue('CLOSED');
             } else {
-                // TODO: implementar código para inserir o troco do cliente na tela com STATUS: OPEN
                 updateChangeDue('OPEN');
             }
             
         } else {
             changeDue.innerHTML = `<p>Status: INSUFFICIENT_FUNDS</p>`
         }
+
+        resetChange();
+        loadDrawerChanges();
     }
 })
 
