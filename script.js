@@ -88,7 +88,12 @@ purchaseBtn.addEventListener('click', () => {
 
         if(customerChange === 0) {
             let isCashInDrawerEqualToChange = true;
-            cid.forEach(currency => isCashInDrawerEqualToChange = currency[1] > 0 ? false : true)
+            for(let i = 0; i < cid.length; i++) {
+                if(cid[i][1] > 0) {
+                    isCashInDrawerEqualToChange = false;
+                    break;
+                }
+            }
 
             if(isCashInDrawerEqualToChange) {
                 loadChangeDueElement('CLOSED');
